@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог Yii2</title>
+
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/autumn-dawn.css" />
+
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+
+	<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/jquery.fileupload.css">
+    <link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+
+</head>
+<body>
+<div class="preloader"></div>
+    <div class="container">
+
+        <div class="postcount"></div>
+        <div class="say-hello"></div>
+        <!-- sample templates start -->
+
+        <!-- Navbar -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h1>Записи блога</h1>
+                </div>
+            </div>
+        </div>
+
+		        <br id="create" onsubmit="createPost();">
+                    <div class="form-group group-of-name">
+                        <label class="control-label" for="username">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="title">Название поста</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label" for="content">Содержимое</label>
+                        <textarea class="form-control" id="content"></textarea>
+                    </div>
+
+						<span class="btn btn-success fileinput-button">
+						<i class="glyphicon glyphicon-plus"></i>
+						<span>Выберите файлы...</span>
+						<!-- The file input field used as target for the file upload widget -->
+						<input id="fileupload" type="file" name="files[]" multiple>
+						</span>
+						<br>
+						<br>
+						<!-- The global progress bar -->
+						<div id="progress" class="progress">
+							<div class="progress-bar progress-bar-success"></div>
+						</div>
+						<!-- The container for the uploaded files -->
+						<div id="files" class="files"></div>
+                    <div class="form-group">
+                        <label class="control-label" for="input-link">Укажите внешние ссылки или ссылки на ролики youtube</label>
+                        <div class="link-list">
+                            <div class="link-item">
+                                <input class="form-control" id="input-link" type="text" value="" />
+                            </div>
+                        </div>
+                        <button class="btn btn-default" type="button" onclick="addLinkField();">Добавить поле со ссылкой</button>
+                    </div>
+                    </br>
+
+                    <button class="btn btn-default" type="button" onclick="createPost();">Отправить</button>
+
+
+  
+                </form>
+        <hr><hr><hr><hr>
+		<br /><br />
+		
+        <!-- Headings -->
+        <div class="row post-list" id="post-list">
+
+        </div>
+
+
+
+
+            </div>
+     
+
+
+        <script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+		<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+		<script src="js/jquery.ui.widget.js"></script>
+		<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+		<script src="js/jquery.iframe-transport.js"></script>
+		<!-- The basic File Upload plugin -->
+		<script src="js/jquery.fileupload.js"></script>
+		<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script>
+		/*jslint unparam: true */
+		/*global window, $ */
+		$(function () {
+			'use strict';
+			// Change this to the location of your server-side upload handler:
+			var url = window.location.hostname === 'blueimp.github.io' ?
+						'//jquery-file-upload.appspot.com/' : 'uploadfile.php';
+			$('#fileupload').fileupload({
+				url: url,
+				dataType: 'json',
+				done: function (e, data) {
+					$.each(data.result.files, function (index, file) {
+						$('<p/>').text(file.name).appendTo('#files');
+					});
+				},
+				progressall: function (e, data) {
+					var progress = parseInt(data.loaded / data.total * 100, 10);
+					$('#progress .progress-bar').css(
+						'width',
+						progress + '%'
+					);
+				}
+			}).prop('disabled', !$.support.fileInput)
+				.parent().addClass($.support.fileInput ? undefined : 'disabled');
+		});
+		</script>
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('[data-toggle="popover"]').popover();
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+			
+        </script>
+
+        <!-- sample templates end -->
+
+    </div>
+
+</body>
+</html>
+

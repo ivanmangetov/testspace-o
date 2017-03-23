@@ -1,0 +1,67 @@
+2017-03-22 06:40:22 [-][-][-][error][ReflectionException] ReflectionException: Class yii\gii\Module does not exist in C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\di\Container.php:424
+Stack trace:
+#0 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\di\Container.php(424): ReflectionClass->__construct('yii\\gii\\Module')
+#1 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\di\Container.php(364): yii\di\Container->getDependencies('yii\\gii\\Module')
+#2 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\di\Container.php(156): yii\di\Container->build('yii\\gii\\Module', Array, Array)
+#3 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\BaseYii.php(340): yii\di\Container->get('yii\\gii\\Module', Array)
+#4 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\base\Module.php(423): yii\BaseYii::createObject('yii\\gii\\Module', Array)
+#5 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\base\Application.php(309): yii\base\Module->getModule('gii')
+#6 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\base\Application.php(272): yii\base\Application->bootstrap()
+#7 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\console\Application.php(124): yii\base\Application->init()
+#8 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\base\Object.php(107): yii\console\Application->init()
+#9 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\base\Application.php(205): yii\base\Object->__construct(Array)
+#10 C:\openserver\OpenServer\domains\localhost\vendor\yiisoft\yii2\console\Application.php(89): yii\base\Application->__construct(Array)
+#11 C:\openserver\OpenServer\domains\localhost\yii(26): yii\console\Application->__construct(Array)
+#12 {main}
+2017-03-22 06:40:22 [-][-][-][info][application] $_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPDATA' => 'C:\\Users\\manager\\AppData\\Roaming'
+    'CommonProgramFiles' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'DESKTOP-O479UJT'
+    'ComSpec' => 'C:\\WINDOWS\\system32\\cmd.exe'
+    'HOMEDRIVE' => 'C:'
+    'HOMEPATH' => '\\Users\\manager'
+    'LOCALAPPDATA' => 'C:\\Users\\manager\\AppData\\Local'
+    'LOGONSERVER' => '\\\\DESKTOP-O479UJT'
+    'NUMBER_OF_PROCESSORS' => '2'
+    'OneDrive' => 'C:\\Users\\manager\\OneDrive'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Skype\\Phone\\;C:\\Program Files\\OpenVPN\\bin;C:\\openserver\\OpenServer\\modules\\php\\PHP-7.0;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\TortoiseHg\\;C:\\Users\\manager\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\manager\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\manager\\AppData\\Roaming\\npm'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'PROCESSOR_ARCHITECTURE' => 'x86'
+    'PROCESSOR_ARCHITEW6432' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'AMD64 Family 21 Model 19 Stepping 1, AuthenticAMD'
+    'PROCESSOR_LEVEL' => '21'
+    'PROCESSOR_REVISION' => '1301'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files (x86)'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PROMPT' => '$P$G'
+    'PSModulePath' => 'C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'SESSIONNAME' => 'Console'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\WINDOWS'
+    'TEMP' => 'C:\\Users\\manager\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Users\\manager\\AppData\\Local\\Temp'
+    'USERDOMAIN' => 'DESKTOP-O479UJT'
+    'USERDOMAIN_ROAMINGPROFILE' => 'DESKTOP-O479UJT'
+    'USERNAME' => 'manager'
+    'USERPROFILE' => 'C:\\Users\\manager'
+    'windir' => 'C:\\WINDOWS'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1490154022.6318
+    'REQUEST_TIME' => 1490154022
+    'argv' => [
+        0 => 'yii'
+        1 => 'socket/start-socket'
+    ]
+    'argc' => 2
+]
