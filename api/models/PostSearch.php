@@ -11,7 +11,7 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['title'], 'safe'],
+            [['id'], 'safe'],
         ];
     }
 
@@ -28,17 +28,18 @@ class PostSearch extends Post
     {
         $query = Post::find();
 
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            return $dataProvider;
-        }
+        $query->andFilterWhere([
+            'id'=> $this->id,
+        ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+
 
         return $dataProvider;
     }

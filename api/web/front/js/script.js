@@ -1,7 +1,7 @@
 
 
-urlserver = '/api/web/index.php/';
-files_url ='/api/web/front/files/';
+urlserver = '/index.php/';
+files_url ='/front/files/';
 
 userM = 'admin';
 passM = '945031';
@@ -153,7 +153,10 @@ function createPost(){
           success: function(data) {
             //console.log(data);
 			var blog_id = data.id;
-              socket.send('addElement/'+blog_id);
+              //console.log(blog_id);
+             // socket.send('addElement');
+              socket.send('{"command":"addElement","id":"'+ blog_id +'"}');
+
 			//files create
 
 
@@ -205,24 +208,11 @@ function createPost(){
 
 };
 
-function ajax_get(url, callback,type) {
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            //console.log('responseText:' + xmlhttp.responseText);
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch(err) {
-                console.log(err.message + " in " + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
-        }
-    };
- 
-    xmlhttp.open("GET", url, type);
-    xmlhttp.send();
-};
+
+
+
+
+
 
 function post_echo(item){
 
@@ -238,58 +228,59 @@ function post_echo(item){
         '<div class="likeblok"><div class="like-buttom" onclick="sendLike(' + item.id + ')"></div><span class="likes" id="likes-' + item.id + '"></span></div></div>');
     getLike(item.id);
 
+    $.ajax({
+            type: 'GET',
+            url: urlserver + 'upfiles?s[blog_id]='+ item.id,
+            success: function(data_files) {
 
-    ajax_get(urlserver + 'upfiles?s[blog_id]=' + item.id, function (data_files) {
-        //  console.log(data_files);
-        // console.log('1');
-        var html_files = '';
+                var html_files = '';
 
-        for (var j = 0; j < data_files.length; j++) {
-            item_files = data_files[j];
+                for (var j = 0; j < data_files.length; j++) {
+                    item_files = data_files[j];
 
-            html_files = printFiles(item_files, html_files);
+                    html_files = printFiles(item_files, html_files);
+                };
 
+                $('#post-list #postitem-' + item.id).append(html_files);
+                $("a[rel^='prettyPhoto']").prettyPhoto();
 
-        };
-
-        $('#post-list #postitem-' + item.id).append(html_files);
-        $("a[rel^='prettyPhoto']").prettyPhoto();
-    }, false);
-
+            }
+    });
 }
 
 function print_post(post_id){
+  //  console.log(post_id);
+    $.ajax({
+        type: 'GET',
+        url: urlserver+'posts?s[id]='+post_id,
+        async: false,
+        success: function (data) {
 
-    ajax_get(urlserver+'posts?sort=-id&s[post_id]='+post_id, function(data) {
-
-
-        item = data[0];
-
-        post_echo(item);
-
-    }, true);
+            item = data[0];
+           // console.log(item);
+              post_echo(item);
+           // console.log(item);*/
+        }
+    });
 
 }
 
 function update_post_list(){
 
-    var current_count = parseInt($('.postcount').html());
 
-    ajax_get(urlserver+'posts', function(data) {
-        if (data.length != current_count) {
-            $('#post-list').html('');
-            $('.postcount').html(data.length);
-            for (var i = 0; i < data.length; i++) {
-                item = data[i];
-
-                // console.log(item.user_token);
-
+    $.ajax({
+        type: 'GET',
+        url: urlserver+'posts',
+        async: false,
+        success: function(data) {
+            for (var i=0; i < data.length; i++) {
+                item=data[i];
                 post_echo(item);
                 $('.preloader').fadeOut();
+            }
+        }
+    });
 
-            };
-        };
-    }, true);
 
 
 };
@@ -306,7 +297,7 @@ function deletePost(id){
 
            // update_post_list();
             $('#postitem-'+id).remove();
-            socket.send('deleteElement/'+id);
+            socket.send('{"command":"deleteElement","id":"'+ id +'"}');
         },
         error:  function(xhr, str){
             console.log('Возникла ошибка: ' + xhr.responseCode);
@@ -375,7 +366,7 @@ function sendLike(post_id){
             },
             success: function (data) {
                 getLike(post_id);
-                socket.send('updateLike/'+post_id);
+                socket.send('{"command":"updateLike","id":"'+ post_id +'"}');
             },
             error: function (xhr, str) {
                 console.log('Возникла ошибка: ' + xhr.responseCode);
@@ -439,26 +430,21 @@ function checkChange(){
 
 $( document ).ready(function() {
 
-
-    socket = new WebSocket('ws://localhost:8081');
+    update_post_list();
+    socket = new WebSocket('ws://localhost.api:8080');
     socket.onopen = function(e) {
     };
     socket.onmessage = function(event) {
         var messages = JSON.parse(event.data);
-        var command = messages[0].text;
-        command_array = command.split('/');
-        switch (command_array[0]) {
-            case 'updateLike': getLike(command_array[1]); break;
-            case 'deleteElement': $('#postitem-'+command_array[1]).remove(); break;
-            case 'addElement': print_post(command_array[1]); break;
+        console.log(messages[0]);
+
+        switch (messages[0].command) {
+            case 'updateLike': getLike(messages[0].id); break;
+            case 'deleteElement': $('#postitem-'+messages[0].id).remove(); break;
+            case 'addElement': print_post(messages[0].id); break;
         };
     };
 
-
-
-
-
-    update_post_list();
 
     $("a[rel^='prettyPhoto']").prettyPhoto();
 
